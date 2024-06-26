@@ -1,13 +1,14 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ArrivalsComponent } from './arrivals.component'; // Adjust the path if necessary
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [ArrivalsComponent]  // Import the standalone ArrivalsComponent here
 })
 export class AppComponent {
-  title = 'bart-menu-angular-app';
+  title = 'BART Arrival Times';
 }

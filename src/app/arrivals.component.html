@@ -1,0 +1,8 @@
+<h2>Current Time (PST): {{ currentTime }}</h2>
+<h2>Current BART Station: {{ stationName }}</h2>
+
+<ul>
+    <li *ngFor="let dest of etd">
+        <h2> Next {{dest.estimate[0].color}} line to {{dest.destination}} leaves in {{dest.estimate[0].minutes}} minutes </h2>
+    </li>
+</ul>
