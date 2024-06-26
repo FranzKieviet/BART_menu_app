@@ -1,8 +1,26 @@
-<h2>Current Time (PST): {{ currentTime }}</h2>
-<h2>Current BART Station: {{ stationName }}</h2>
 
-<ul>
-    <li *ngFor="let dest of etd">
-        <h2> Next {{dest.estimate[0].color}} line to {{dest.destination}} leaves in {{dest.estimate[0].minutes}} minutes </h2>
-    </li>
-</ul>
+<div class="container">
+    <div class="logo">
+        <img src="assets/images/logo.png" alt="BART Logo">
+    </div>
+
+    <div class = "station">
+        <h1>{{ stationName }}</h1>
+    </div>
+
+    <div class = "time">
+        <p>{{ currentTime }}</p>
+    </div>
+    
+</div>
+
+<div>
+    <h2>Current Time (PST): {{ currentTime }}</h2>
+    
+
+    <ul>
+        <li *ngFor="let dest of etd">
+            <h2> Next {{dest.estimate[0].color}} line to {{dest.destination}} leaves in {{dest.estimate[0].minutes}} minutes </h2>
+        </li>
+    </ul>
+</div>

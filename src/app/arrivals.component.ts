@@ -54,6 +54,7 @@ async function fetchArrival(): Promise<ApiResponse> {
 @Component({
   selector: 'arrivals',
   templateUrl: './arrivals.component.html',
+  styleUrls: ['./arrivals.component.css'],
   standalone: true,  // This makes it a standalone component
   imports: [CommonModule]
 })

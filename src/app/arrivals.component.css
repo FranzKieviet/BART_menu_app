@@ -1,0 +1,55 @@
+.container {
+    display: flex; /* Use flexbox for layout */
+    align-items: flex-start;
+    background: linear-gradient(to right, #ffffff, #f0f0f0);
+}
+
+.logo {
+    width: 10%;
+    box-shadow: 8px 8px lightslategray;
+    padding: 10px;
+    border-radius: 8px
+  }
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+
+  .station {
+    width: 75%;
+    height: 100%;
+    font-size: 4vw;
+    line-height: 1.1;
+    display: flex;
+    text-align: center;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;    display: flex; /* Use flexbox for station content */
+    flex-direction: column;
+}
+
+.station h1 {
+    margin-top: auto;
+    font-weight: normal;
+    margin: 0; /* Remove default margins */
+}
+
+.time {
+    width: 15%;
+    height: 100%;
+    font-size: 2vw;
+    line-height: 5;
+    padding-right: 5px;
+    text-align: right;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;    display: flex; /* Use flexbox for station content */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.time p {
+    align-self: flex-end;
+    display: flex;
+    margin-top: auto;
+    margin: 0; /* Remove default margins */
+}
