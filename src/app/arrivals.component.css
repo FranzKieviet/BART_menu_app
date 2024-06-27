@@ -1,7 +1,7 @@
 .container {
-    display: flex; /* Use flexbox for layout */
+    display: flex;
     align-items: flex-start;
-    background: linear-gradient(to right, #ffffff, #f0f0f0);
+    background: linear-gradient(to right, #ffffff, #e5e1e1);
 }
 
 .logo {
@@ -34,17 +34,37 @@ img {
     margin: 0; /* Remove default margins */
 }
 
-.time {
+.timeContainer {
     width: 15%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.settingContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.filler{
+    width: 90%;
+}
+
+.settingsButton{
+    padding: 5px;
+    width: 10%;
+}
+
+.settingsButton .settings-img {
+    cursor: pointer;
+}
+
+.time {
     font-size: 2vw;
-    line-height: 5;
+    line-height: 3;
     padding-right: 5px;
     text-align: right;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;    display: flex; /* Use flexbox for station content */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
 }
 
 .time p {

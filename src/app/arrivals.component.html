@@ -1,23 +1,31 @@
 
 <div class="container">
     <div class="logo">
-        <img src="assets/images/logo.png" alt="BART Logo">
+            <a href="https://www.bart.gov/">
+            <img src="assets/images/logo.png" alt="BART Logo"> </a>
     </div>
 
     <div class = "station">
         <h1>{{ stationName }}</h1>
     </div>
 
-    <div class = "time">
-        <p>{{ currentTime }}</p>
-    </div>
-    
+    <div class = "timeContainer">
+        <div class = "settingContainer">
+        <div class="filler">
+            <p></p>
+        </div>
+            <div class = "settingsButton">
+                <img src="assets/images/settings.png" alt="Settings" class="settings-img">
+            </div>
+        </div>
+        <div class = "time">
+            <p>{{ currentTime }}</p>
+        </div>
+    </div>    
 </div>
 
 <div>
     <h2>Current Time (PST): {{ currentTime }}</h2>
-    
-
     <ul>
         <li *ngFor="let dest of etd">
             <h2> Next {{dest.estimate[0].color}} line to {{dest.destination}} leaves in {{dest.estimate[0].minutes}} minutes </h2>
