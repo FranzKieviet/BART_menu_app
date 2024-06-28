@@ -24,11 +24,12 @@
     </div>    
 </div>
 
-<div>
-    <h2>Current Time (PST): {{ currentTime }}</h2>
+<div class="arrival-times">
     <ul>
-        <li *ngFor="let dest of etd">
-            <h2> Next {{dest.estimate[0].color}} line to {{dest.destination}} leaves in {{dest.estimate[0].minutes}} minutes </h2>
-        </li>
-    </ul>
+        <li *ngFor="let dest of etd" class="destination-item">
+            <div class="color-box" [ngStyle]="{'background-color': dest.estimate[0].color}"></div>
+            <span class="destination-name">{{ dest.destination }} </span>
+            <span class="departure-time">{{ dest.estimate[0].minutes }} minutes</span>
+          </li>
+      </ul>
 </div>

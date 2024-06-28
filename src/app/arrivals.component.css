@@ -64,7 +64,8 @@ img {
     line-height: 3;
     padding-right: 5px;
     text-align: right;
-    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;    display: flex; /* Use flexbox for station content */
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;    
+    display: flex; /* Use flexbox for station content */
 }
 
 .time p {
@@ -72,4 +73,38 @@ img {
     display: flex;
     margin-top: auto;
     margin: 0; /* Remove default margins */
+}
+
+
+.arrival-times{
+    background: linear-gradient(to right, #ffffff, #1faad8);
+    width: 50%;
+}
+
+li.destination-item {
+    display: flex;
+    font-size: .75vw;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .color-box {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-right: 10px;
+    border-radius: 10px;
+  }
+  
+  .destination-name {
+    width: 70%;
+    font-size: 3em;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;  
+  }
+
+  .departure-time {
+    width: 30%;
+    align-items: right;
+    font-size: 3em; 
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    margin-left: 10px;
 }
