@@ -24,12 +24,30 @@
     </div>    
 </div>
 
-<div class="arrival-times">
-    <ul>
-        <li *ngFor="let dest of etd" class="destination-item">
-            <div class="color-box" [ngStyle]="{'background-color': dest.estimate[0].color}"></div>
-            <span class="destination-name">{{ dest.destination }} </span>
-            <span class="departure-time">{{ dest.estimate[0].minutes }}, &nbsp; {{ dest.estimate[1].minutes }}, &nbsp; {{ dest.estimate[2].minutes }}</span>
-          </li>
-      </ul>
+<div class="bartArtContainer">
+    <div class="top-left">
+        <div class="bartArt">
+            <a href="https://www.pinterest.com/pin/san-francisco-bart--294141419406503673/">
+            <img src="assets/images/bartArt5.png" alt="BART Art"> </a>
+        </div>
+
+        <div class="arrival-times">
+            <h1>BART ARRIVALS:</h1>
+            <ul>
+                <li *ngFor="let dest of etd" class="destination-item">
+                    <div class="color-box" [ngStyle]="{'background-color': dest.estimate[0].color}"></div>
+                    <span class="destination-name">{{ dest.destination }} </span>
+                    <span class="departure-time">{{ dest.estimate[0].minutes }}, &nbsp; {{ dest.estimate[1].minutes }}, &nbsp; {{ dest.estimate[2].minutes }}</span>
+                </li>
+            </ul>  
+        </div>
+    </div>
+
+    <div class="top-right">
+        <div class="bartArt">
+            <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmrwallpaper.com%2Fwallpapers%2Fsan-francisco-skyline-digital-art-hd-apak1km2pkxe7tz5.html&psig=AOvVaw3Wam-dfkoyqXGIJLnJys3T&ust=1719645974184000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCIip2M3i_YYDFQAAAAAdAAAAABAE">
+            <img src="assets/images/sf2.png" alt="SF Art"> </a>
+        </div>
+    </div>
 </div>
+

@@ -75,10 +75,61 @@ img {
     margin: 0; /* Remove default margins */
 }
 
+.bartArtContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.top-left {
+    width: 50%;
+    max-width: 50%;
+    height: 5%;
+    max-height: 5%;
+    background-color: #e5e1e1;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.top-right {
+    width: 50%;
+    max-width: 50%;
+    height: 5%;
+    max-height: 5%;
+}
+
+.bartArt {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.bartArt img {
+    padding-left: 5px;
+    padding-right:5px;
+    padding-bottom: 10px;
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    border-radius: 40px;
+}
 
 .arrival-times{
     background: linear-gradient(to right, #ffffff, #1faad8);
-    width: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.arrival-times h1{
+    font-size: 2em;
+    font-weight: normal;
+    align-content: center;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 2px solid #545353; /* Add a bottom border */
+    display: inline-block;
 }
 
 li.destination-item {
@@ -86,6 +137,7 @@ li.destination-item {
     font-size: .75vw;
     align-items: center;
     margin: 10px 0;
+    text-align: left;
   }
   
   .color-box {
@@ -94,7 +146,7 @@ li.destination-item {
     margin-right: 10px;
     border-radius: 10px;
   }
-  
+
   .destination-name {
     width: 70%;
     font-size: 3em;

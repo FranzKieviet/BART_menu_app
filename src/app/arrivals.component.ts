@@ -106,24 +106,40 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         }
 
         for(let i in this.etd){
-           let index = parseInt(i);
-           let line = this.etd[i];
+          let index = parseInt(i);
+          let line = this.etd[i];
 
-           for(let j in line.estimate){
+          //At the end of the day, a line may have less than two trains:
+          while(line.estimate.length < 3){
+            let newEstimate: Estimate = {
+              minutes: '--',
+              platform: '0',
+              direction: 'Northbound',
+              length: '0',
+              color: 'White',
+              hexcolor: '#000000',
+              bikeflag: '0',
+              delay: '0',
+              cancelflag: '1',
+              dynamicflag: '0'
+          };
+
+            line.estimate.push(newEstimate);
+          }
+
+          for(let j in line.estimate){
             let estimate = line.estimate[j];
-
-            //Fix color casing:
-            estimate.color = estimate.color[0] + estimate.color.slice(1).toLowerCase();
+            
             //Change Leaving to 0
             if (estimate.minutes == "Leaving"){
                 estimate.minutes = "0"
             }
+            //This is here to make it so there is a space if the number is a single digit
+            //Just makes it look pretty later on, no other functional purpose
             if (estimate.minutes.length == 1){
               estimate.minutes = "  " + estimate.minutes
-
             }
-           }
-
+          }
         }
     }
 
