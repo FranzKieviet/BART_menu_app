@@ -103,6 +103,7 @@ li.destination-item {
 
   .departure-time {
     width: 30%;
+    white-space: pre;
     align-items: right;
     font-size: 3em; 
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;

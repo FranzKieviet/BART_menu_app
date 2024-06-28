@@ -115,8 +115,13 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
             //Fix color casing:
             estimate.color = estimate.color[0] + estimate.color.slice(1).toLowerCase();
             //Change Leaving to 0
-            if (estimate.minutes == "Leaving")
+            if (estimate.minutes == "Leaving"){
                 estimate.minutes = "0"
+            }
+            if (estimate.minutes.length == 1){
+              estimate.minutes = "  " + estimate.minutes
+
+            }
            }
 
         }

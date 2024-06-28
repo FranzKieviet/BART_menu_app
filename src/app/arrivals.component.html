@@ -29,7 +29,7 @@
         <li *ngFor="let dest of etd" class="destination-item">
             <div class="color-box" [ngStyle]="{'background-color': dest.estimate[0].color}"></div>
             <span class="destination-name">{{ dest.destination }} </span>
-            <span class="departure-time">{{ dest.estimate[0].minutes }} minutes</span>
+            <span class="departure-time">{{ dest.estimate[0].minutes }}, &nbsp; {{ dest.estimate[1].minutes }}, &nbsp; {{ dest.estimate[2].minutes }}</span>
           </li>
       </ul>
 </div>
