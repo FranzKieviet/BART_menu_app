@@ -1,0 +1,17 @@
+/* cookie.component.css */
+.container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  button, input {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  input {
+    width: 200px;
+  }
+  

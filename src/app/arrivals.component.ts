@@ -1,7 +1,25 @@
 // src/app/arrivals.component.ts
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
+
+const stationAbbreviations: Record<string, string> = {
+    "12th St. Oakland City Center": "12th", "12th": "12th", "12th St.": "12th", "12th Street": "12th",
+    "16th St. Mission": "16th", "16th": "16th", "16th Street": "16th", "16th St.": "16th",
+    "19th St. Oakland": "19th", "19th": "19th", "19th St.": "19th", "19th Street": "19th",
+    "24th St. Mission": "24th", "24th St.": "24th", "24th": "24th", "24th Streeet": "24th",
+    "Ashby": "ashb", "Antioch": "antc", "Balboa Park": "balb", "Bay Fair": "bayf", "Berryessa": "bery",
+    "Castro Valley": "cast", "Civic Center": "civc", "Coliseum": "cols", "Colma": "colm", "Concord": "conc", 
+    "Daly City": "daly", "Downtown Berkeley": "dbrk", "Dublin/Pleasanton": "dubl", "El Cerrito del Norte": "deln", 
+    "El Cerrito Plaza": "plza", "Embarcadero": "embr", "Fremont": "frmt", 
+    "Fruitvale": "ftvl", "Glen Park": "glen", "Hayward": "hayw", 
+    "Lafayette": "lafy", "Lake Merritt": "lake", "MacArthur": "mcar", "Millbrae": "mlbr", "Milpitas": "mlpt", 
+    "Montgomery": "mont", "North Berkeley": "nbrk", "North Concord/Martinez": "ncon", "Orinda": "orin", "Pittsburg/Bay Point": "pitt", 
+    "Pittsburg Center": "pctr", "Pleasant Hill": "phil", "Powell": "powl", "Richmond": "rich", "Rockridge": "rock", "San Bruno": "sbrn", 
+    "SFO": "sfia","San Leandro": "sanl", "South Hayward": "shay", "South San Francisco": "ssan", "Union City": "ucty", 
+    "Warm Springs": "warm", "Walnut Creek": "wcrk", "West Dublin": "wdub", "West Oakland": "woak"
+};
 
 
 interface Estimate {
@@ -38,17 +56,18 @@ interface Estimate {
     root: Root;
   }
 
-async function fetchArrival(): Promise<ApiResponse> {
-    const response = await fetch('https://api.bart.gov/api/etd.aspx?cmd=etd&orig=EMBR&key=MW9S-E7SL-26DU-VV8V&json=y');
+  function retrieveCookieValue(cookieService: CookieService): string {
+    const cookieValue = cookieService.get('station');
+    console.log('Cookie Value:', cookieValue);
 
-    if (!response.ok) {
-        throw new Error('Network response was not ok' + response.statusText);
+    //If is a valid station, return the abrev:
+    if(cookieValue in stationAbbreviations){
+      return stationAbbreviations[cookieValue];
     }
-
-    const data: ApiResponse = await response.json();
-    console.log(data)
-    return data;
-}
+    //Else, send an alert, set a default
+    alert("Station not found, setting value for default")
+    return "embr";
+  }
 
 
 @Component({
@@ -72,6 +91,23 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     stationName: string | undefined;
     etd: Etd[] | undefined;
     
+    constructor(private cookieService: CookieService) { }
+
+    async fetchArrival(): Promise<ApiResponse> {
+      //Get the station from the Cookie!
+      const stationAbbrev = retrieveCookieValue(this.cookieService);
+    
+        //The key below is a public key
+        const response = await fetch('https://api.bart.gov/api/etd.aspx?cmd=etd&orig=' + stationAbbrev +'&key=MW9S-E7SL-26DU-VV8V&json=y');
+    
+        if (!response.ok) {
+            throw new Error('Network response was not ok' + response.statusText);
+        }
+    
+        const data: ApiResponse = await response.json();
+        console.log(data)
+        return data;
+    }
 
     ngOnInit() {
         this.updateTime();
@@ -116,7 +152,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
               platform: '0',
               direction: 'Northbound',
               length: '0',
-              color: 'White',
+              color: 'Black',
               hexcolor: '#000000',
               bikeflag: '0',
               delay: '0',
@@ -145,7 +181,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
     private async fetchAndSetArrival() {
         try {
-            const arrivalData = await fetchArrival();
+            const arrivalData = await this.fetchArrival();
             this.arrivalsData = arrivalData;
             this.updateBART();
             this.cleanBART()

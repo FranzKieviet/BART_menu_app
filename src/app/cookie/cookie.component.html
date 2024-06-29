@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>Set Your Cookies!</h1>
+    <input type="text" [(ngModel)]="stationCookieValue" placeholder="BART station name">
+    <input type="text" [(ngModel)]="city1CookieValue" placeholder="Weather for 1st City">
+    <input type="text" [(ngModel)]="city2CookieValue" placeholder="Weather for 2nd City">
+    <button (click)="onSetCookie()">Set Cookie</button>
+    <button (click)="onGetCookie()">Get Cookie</button>
+    <p id="cookieValue">{{cookieValueMessage}}</p>
+  </div>
+  
