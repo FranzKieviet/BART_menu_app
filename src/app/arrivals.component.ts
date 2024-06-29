@@ -5,20 +5,20 @@ import { CookieService } from 'ngx-cookie-service';
 
 
 const stationAbbreviations: Record<string, string> = {
-    "12th St. Oakland City Center": "12th", "12th": "12th", "12th St.": "12th", "12th Street": "12th",
-    "16th St. Mission": "16th", "16th": "16th", "16th Street": "16th", "16th St.": "16th",
-    "19th St. Oakland": "19th", "19th": "19th", "19th St.": "19th", "19th Street": "19th",
-    "24th St. Mission": "24th", "24th St.": "24th", "24th": "24th", "24th Streeet": "24th",
-    "Ashby": "ashb", "Antioch": "antc", "Balboa Park": "balb", "Bay Fair": "bayf", "Berryessa": "bery",
-    "Castro Valley": "cast", "Civic Center": "civc", "Coliseum": "cols", "Colma": "colm", "Concord": "conc", 
-    "Daly City": "daly", "Downtown Berkeley": "dbrk", "Dublin/Pleasanton": "dubl", "El Cerrito del Norte": "deln", 
-    "El Cerrito Plaza": "plza", "Embarcadero": "embr", "Fremont": "frmt", 
-    "Fruitvale": "ftvl", "Glen Park": "glen", "Hayward": "hayw", 
-    "Lafayette": "lafy", "Lake Merritt": "lake", "MacArthur": "mcar", "Millbrae": "mlbr", "Milpitas": "mlpt", 
-    "Montgomery": "mont", "North Berkeley": "nbrk", "North Concord/Martinez": "ncon", "Orinda": "orin", "Pittsburg/Bay Point": "pitt", 
-    "Pittsburg Center": "pctr", "Pleasant Hill": "phil", "Powell": "powl", "Richmond": "rich", "Rockridge": "rock", "San Bruno": "sbrn", 
-    "SFO": "sfia","San Leandro": "sanl", "South Hayward": "shay", "South San Francisco": "ssan", "Union City": "ucty", 
-    "Warm Springs": "warm", "Walnut Creek": "wcrk", "West Dublin": "wdub", "West Oakland": "woak"
+  "12TH ST. OAKLAND CITY CENTER": "12TH", "12TH": "12TH", "12TH ST.": "12TH", "12TH STREET": "12TH",
+  "16TH ST. MISSION": "16TH", "16TH": "16TH", "16TH STREET": "16TH", "16TH ST.": "16TH",
+  "19TH ST. OAKLAND": "19TH", "19TH": "19TH", "19TH ST.": "19TH", "19TH STREET": "19TH",
+  "24TH ST. MISSION": "24TH", "24TH ST.": "24TH", "24TH": "24TH", "24TH STREEET": "24TH",
+  "ASHBY": "ASHB", "ANTIOCH": "ANTC", "BALBOA PARK": "BALB", "BAY FAIR": "BAYF", "BERRYESSA": "BERY",
+  "CASTRO VALLEY": "CAST", "CIVIC CENTER": "CIVC", "COLISEUM": "COLS", "COLMA": "COLM", "CONCORD": "CONC",
+  "DALY CITY": "DALY", "DOWNTOWN BERKELEY": "DBRK", "DUBLIN/PLEASANTON": "DUBL", "EL CERRITO DEL NORTE": "DELN",
+  "EL CERRITO PLAZA": "PLZA", "EMBARCADERO": "EMBR", "FREMONT": "FRMT",
+  "FRUITVALE": "FTVL", "GLEN PARK": "GLEN", "HAYWARD": "HAYW",
+  "LAFAYETTE": "LAFY", "LAKE MERRITT": "LAKE", "MACARTHUR": "MCAR", "MILLBRAE": "MLBR", "MILPITAS": "MLPT",
+  "MONTGOMERY": "MONT", "NORTH BERKELEY": "NBRK", "NORTH CONCORD/MARTINEZ": "NCON", "ORINDA": "ORIN", "PITTSBURG/BAY POINT": "PITT",
+  "PITTSBURG CENTER": "PCTR", "PLEASANT HILL": "PHIL", "POWELL": "POWL", "RICHMOND": "RICH", "ROCKRIDGE": "ROCK", "SAN BRUNO": "SBRN",
+  "SFO": "SFIA", "SAN LEANDRO": "SANL", "SOUTH HAYWARD": "SHAY", "SOUTH SAN FRANCISCO": "SSAN", "UNION CITY": "UCTY",
+  "WARM SPRINGS": "WARM", "WALNUT CREEK": "WCRK", "WEST DUBLIN": "WDUB", "WEST OAKLAND": "WOAK"
 };
 
 
@@ -61,8 +61,9 @@ interface Estimate {
     console.log('Cookie Value:', cookieValue);
 
     //If is a valid station, return the abrev:
-    if(cookieValue in stationAbbreviations){
-      return stationAbbreviations[cookieValue];
+    if(cookieValue.toUpperCase() in stationAbbreviations){
+      console.log('Abrev:', stationAbbreviations[cookieValue.toUpperCase()]);
+      return stationAbbreviations[cookieValue.toUpperCase()];
     }
     //Else, send an alert, set a default
     alert("Station not found, setting value for default")

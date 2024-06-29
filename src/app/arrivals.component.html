@@ -11,12 +11,13 @@
 
     <div class = "timeContainer">
         <div class = "settingContainer">
-        <div class="filler">
-            <p></p>
-        </div>
-            <div class = "settingsButton">
-                <img src="assets/images/settings.png" alt="Settings" class="settings-img">
+            <div class="filler">
+                <p></p>
             </div>
+
+            <button class="settingsButton" (click)="toggleCookieBox()">
+                <img src="assets/images/settings.png" alt="Settings" class="settings-img">
+            </button>
         </div>
         <div class = "time">
             <p>{{ currentTime }}</p>
