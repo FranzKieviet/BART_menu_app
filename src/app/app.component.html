@@ -1,2 +1,28 @@
-<arrivals></arrivals>
+<div class="container">
+    <div class="logo">
+            <a href="https://www.bart.gov/">
+            <img src="assets/images/logo.png" alt="BART Logo"> </a>
+    </div>
+
+    <div class = "station">
+        <h1>{{ stationName }}</h1>
+    </div>
+
+    <div class = "timeContainer">
+        <div class = "settingContainer">
+            <div class="filler">
+                <p></p>
+            </div>
+
+            <button class="settingsButton">
+                <img src="assets/images/settings.png" alt="Settings" class="settings-img">
+            </button>
+        </div>
+        <div class = "time">
+            <p>{{ currentTime }}</p>
+        </div>
+    </div>    
+</div>
+
+<arrivals (stationNameChange)="onStationNameChange($event)" (timeChange)="onTimeChange($event)"></arrivals>
 <app-cookie></app-cookie>

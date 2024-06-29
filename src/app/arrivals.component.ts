@@ -1,5 +1,5 @@
 // src/app/arrivals.component.ts
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input,  Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -81,15 +81,20 @@ interface Estimate {
 
 
 export class ArrivalsComponent implements OnInit, OnDestroy{ 
-    //Current Times Variables:
-    currentTime: string = '';
     refreshRate: number = 5000;
     //TimeId is used in setInterval, which returns a unique identifier
     //which helps when we need to stop the timer
     private timerId: any; 
 
     arrivalsData: ApiResponse | undefined;
-    stationName: string | undefined;
+    //stationName: string | undefined;
+    @Input() stationName: string | undefined;
+    //Current Times Variables:
+    //currentTime: string = '';
+    @Input() currentTime: string | undefined;
+    //We want to check for changes, and left app know
+    @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 
     etd: Etd[] | undefined;
     
     constructor(private cookieService: CookieService) { }
@@ -127,6 +132,8 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     private updateTime() {
         const now = new Date();
         this.currentTime = now.toLocaleTimeString();
+
+        this.timeChange.emit(this.currentTime);
     }
     
     private updateBART(){
@@ -135,6 +142,9 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         }
         this.stationName = this.arrivalsData.root.station[0].name;
         this.etd = this.arrivalsData.root.station[0].etd
+
+        //Emit change so that the app component knows:
+        this.stationNameChange.emit(this.stationName);
     }
 
     private cleanBART(){
