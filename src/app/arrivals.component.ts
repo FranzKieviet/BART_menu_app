@@ -84,18 +84,17 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     refreshRate: number = 5000;
     //TimeId is used in setInterval, which returns a unique identifier
     //which helps when we need to stop the timer
-    private timerId: any; 
-
+    private timerId: any;
+    etd: Etd[] | undefined;
     arrivalsData: ApiResponse | undefined;
-    //stationName: string | undefined;
+    
+
+    //These values get passed to app.component, so we need to mark them as input and output
     @Input() stationName: string | undefined;
-    //Current Times Variables:
-    //currentTime: string = '';
     @Input() currentTime: string | undefined;
-    //We want to check for changes, and left app know
+    //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 
-    etd: Etd[] | undefined;
     
     constructor(private cookieService: CookieService) { }
 
@@ -111,10 +110,10 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         }
     
         const data: ApiResponse = await response.json();
-        console.log(data)
         return data;
     }
 
+    //Runs on start up and sets the time and calls BART API
     ngOnInit() {
         this.updateTime();
         this.timerId = setInterval(() => {
@@ -136,6 +135,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         this.timeChange.emit(this.currentTime);
     }
     
+    //This method helps get some needed info that is used in other methods
     private updateBART(){
         if(this.arrivalsData == undefined){
             return;
@@ -147,6 +147,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         this.stationNameChange.emit(this.stationName);
     }
 
+    //Cleans the input and fixes any option errors down the road
     private cleanBART(){
         if(this.etd == undefined){
             return;
