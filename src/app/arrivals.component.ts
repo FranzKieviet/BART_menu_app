@@ -122,6 +122,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         }, this.refreshRate);
       }
 
+    //This helps keep things clean after we end the program
     ngOnDestroy() {
         if (this.timerId) {
           clearInterval(this.timerId);

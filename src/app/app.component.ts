@@ -19,11 +19,13 @@ export class AppComponent {
   currentTime: string = ''
 
 
+  //Gets and updates the station name within the class
   onStationNameChange(newStationName: string) {
     this.stationName = newStationName;
     console.log("New StationName: "+ this.stationName);
   }
 
+  //Gets and updates the time within the class
   onTimeChange(newTime: string) {
     this.currentTime = newTime;
     console.log("New Time: "+ this.currentTime);
