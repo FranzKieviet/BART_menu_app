@@ -1,5 +1,5 @@
 // src/app/app.component.ts
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ArrivalsComponent } from './arrivals.component'; // Adjust the path if necessary
 import { CookieComponent } from './cookie/cookie.component';
 
@@ -10,14 +10,17 @@ import { CookieComponent } from './cookie/cookie.component';
   standalone: true,
   imports: [ArrivalsComponent, CookieComponent]
 })
+
 export class AppComponent {
   title = 'BART Arrival Times';
   @ViewChild(ArrivalsComponent) arrivalsComponent!: ArrivalsComponent;
 
 
-  stationName: string = '';
-  currentTime: string = ''
+  @Input() stationName: string = '';
+  @Input() currentTime: string = ''
+  settingsClicked: boolean = false;
 
+  @Output() settingsClickedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   //Gets and updates the station name within the class
   onStationNameChange(newStationName: string) {
@@ -29,5 +32,12 @@ export class AppComponent {
   onTimeChange(newTime: string) {
     this.currentTime = newTime;
     console.log("New Time: "+ this.currentTime);
+  }
+
+  //Emits message that the setting button has been clicked
+  settingsButtonClicked() {
+    console.log("Click")
+    this.settingsClicked = !this.settingsClicked;
+    this.settingsClickedChange.emit(this.settingsClicked);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -16,6 +16,8 @@ export class CookieComponent {
   city1CookieValue: string = '';
   city2CookieValue: string = '';
   cookieValueMessage: string = '';
+
+  @Input() settingsClicked: boolean = false;
 
   constructor(private cookieService: CookieService) {}
 

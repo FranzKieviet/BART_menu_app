@@ -90,8 +90,9 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     
 
     //These values get passed to app.component, so we need to mark them as input and output
-    @Input() stationName: string | undefined;
-    @Input() currentTime: string | undefined;
+    stationName: string | undefined;
+    currentTime: string | undefined;
+
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 

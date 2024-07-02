@@ -14,7 +14,7 @@
                 <p></p>
             </div>
 
-            <button class="settingsButton">
+            <button (click)="settingsButtonClicked()" class="settingsButton">
                 <img src="assets/images/settings.png" alt="Settings" class="settings-img">
             </button>
         </div>
@@ -24,5 +24,9 @@
     </div>    
 </div>
 
+
+<app-cookie
+  [settingsClicked]="settingsClicked"
+  (settingsClickedChange)="settingsButtonClicked()">
+</app-cookie>
 <arrivals (stationNameChange)="onStationNameChange($event)" (timeChange)="onTimeChange($event)"></arrivals>
-<app-cookie></app-cookie>
