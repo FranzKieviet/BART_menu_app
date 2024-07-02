@@ -4,24 +4,6 @@ import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 
 
-const stationAbbreviations: Record<string, string> = {
-  "12TH ST. OAKLAND CITY CENTER": "12TH", "12TH": "12TH", "12TH ST.": "12TH", "12TH STREET": "12TH",
-  "16TH ST. MISSION": "16TH", "16TH": "16TH", "16TH STREET": "16TH", "16TH ST.": "16TH",
-  "19TH ST. OAKLAND": "19TH", "19TH": "19TH", "19TH ST.": "19TH", "19TH STREET": "19TH",
-  "24TH ST. MISSION": "24TH", "24TH ST.": "24TH", "24TH": "24TH", "24TH STREEET": "24TH",
-  "ASHBY": "ASHB", "ANTIOCH": "ANTC", "BALBOA PARK": "BALB", "BAY FAIR": "BAYF", "BERRYESSA": "BERY",
-  "CASTRO VALLEY": "CAST", "CIVIC CENTER": "CIVC", "COLISEUM": "COLS", "COLMA": "COLM", "CONCORD": "CONC",
-  "DALY CITY": "DALY", "DOWNTOWN BERKELEY": "DBRK", "DUBLIN/PLEASANTON": "DUBL", "EL CERRITO DEL NORTE": "DELN",
-  "EL CERRITO PLAZA": "PLZA", "EMBARCADERO": "EMBR", "FREMONT": "FRMT",
-  "FRUITVALE": "FTVL", "GLEN PARK": "GLEN", "HAYWARD": "HAYW",
-  "LAFAYETTE": "LAFY", "LAKE MERRITT": "LAKE", "MACARTHUR": "MCAR", "MILLBRAE": "MLBR", "MILPITAS": "MLPT",
-  "MONTGOMERY": "MONT", "NORTH BERKELEY": "NBRK", "NORTH CONCORD/MARTINEZ": "NCON", "ORINDA": "ORIN", "PITTSBURG/BAY POINT": "PITT",
-  "PITTSBURG CENTER": "PCTR", "PLEASANT HILL": "PHIL", "POWELL": "POWL", "RICHMOND": "RICH", "ROCKRIDGE": "ROCK", "SAN BRUNO": "SBRN",
-  "SFO": "SFIA", "SAN LEANDRO": "SANL", "SOUTH HAYWARD": "SHAY", "SOUTH SAN FRANCISCO": "SSAN", "UNION CITY": "UCTY",
-  "WARM SPRINGS": "WARM", "WALNUT CREEK": "WCRK", "WEST DUBLIN": "WDUB", "WEST OAKLAND": "WOAK"
-};
-
-
 interface Estimate {
     minutes: string;
     platform: string;
@@ -56,20 +38,7 @@ interface Estimate {
     root: Root;
   }
 
-  function retrieveCookieValue(cookieService: CookieService): string {
-    const cookieValue = cookieService.get('station');
-    console.log('Cookie Value:', cookieValue);
-
-    //If is a valid station, return the abrev:
-    if(cookieValue.toUpperCase() in stationAbbreviations){
-      console.log('Abrev:', stationAbbreviations[cookieValue.toUpperCase()]);
-      return stationAbbreviations[cookieValue.toUpperCase()];
-    }
-    //Else, send an alert, set a default
-    alert("Station not found, setting value for default")
-    return "embr";
-  }
-
+  const DEFAULTSTATIONABREV = 'LAKE'
 
 @Component({
   selector: 'arrivals',
@@ -101,7 +70,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
     async fetchArrival(): Promise<ApiResponse> {
       //Get the station from the Cookie!
-      const stationAbbrev = retrieveCookieValue(this.cookieService);
+      const stationAbbrev = this.cookieService.get('stationAbrev');
     
         //The key below is a public key
         const response = await fetch('https://api.bart.gov/api/etd.aspx?cmd=etd&orig=' + stationAbbrev +'&key=MW9S-E7SL-26DU-VV8V&json=y');
@@ -114,21 +83,31 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         return data;
     }
 
-    //Runs on start up and sets the time and calls BART API
     ngOnInit() {
+      this.initializeApp();
+  
+      // Set up interval to update time and fetch BART data
+      this.timerId = setInterval(() => {
         this.updateTime();
-        this.timerId = setInterval(() => {
-          this.updateTime();
-          this.fetchAndSetArrival();
-        }, this.refreshRate);
-      }
-
-    //This helps keep things clean after we end the program
+        this.fetchAndSetArrival();
+      }, this.refreshRate);
+      
+    }
+  
     ngOnDestroy() {
-        if (this.timerId) {
-          clearInterval(this.timerId);
-        }
+      if (this.timerId) {
+        clearInterval(this.timerId);
       }
+    }
+  
+    private initializeApp() {
+      this.updateTime();
+      this.fetchAndSetArrival();
+      //Check if there are cookies set:
+      if(this.cookieService.get('stationAbrev') == ''){
+        this.cookieService.set('stationAbrev', DEFAULTSTATIONABREV);
+      }
+    }
 
     private updateTime() {
         const now = new Date();
