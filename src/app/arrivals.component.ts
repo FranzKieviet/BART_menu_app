@@ -38,6 +38,34 @@ interface Estimate {
     root: Root;
   }
 
+  interface weatherApiResponse {
+    properties: Properties;
+  }
+  
+  interface Properties {
+    forecastGridData: string;
+  }
+
+  interface weatherForecastApiResponse {
+    properties: PropertiesForecast;
+  }
+  
+  interface PropertiesForecast {
+    temperature: Weather;
+    maxTemperature: Weather;
+    minTemperature: Weather;
+  }
+
+  interface Weather{
+    umo: string;
+    values: WeatherValues[]; 
+  }
+
+  interface WeatherValues{
+    validTime: string;
+    value: string;
+  }
+
   const DEFAULTSTATIONABREV = 'LAKE'
 
 @Component({
@@ -47,7 +75,6 @@ interface Estimate {
   standalone: true,  // This makes it a standalone component
   imports: [CommonModule]
 })
-
 
 export class ArrivalsComponent implements OnInit, OnDestroy{ 
     refreshRate: number = 5000;
@@ -65,6 +92,9 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 
+
+    //Weather Data:
+    forecastData: PropertiesForecast | undefined;
     
     constructor(private cookieService: CookieService) { }
 
@@ -81,6 +111,28 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     
         const data: ApiResponse = await response.json();
         return data;
+    }
+
+    async fetchWeather(lat: string, long:string) {
+        //The key below is a public key
+        const response = await fetch('https://api.weather.gov/points/' + lat + ',' + long);
+    
+        if (!response.ok) {
+            throw new Error('Network response was not ok' + response.statusText);
+        }
+    
+        const data: weatherApiResponse = await response.json();
+        const locationAPI =  data.properties.forecastGridData;
+
+        const responseForecast = await fetch(locationAPI);
+    
+        if (!responseForecast.ok) {
+            throw new Error('Network response was not ok' + response.statusText);
+        }
+
+        const forecastData: weatherForecastApiResponse = await responseForecast.json();
+        this.forecastData = forecastData.properties;
+        console.log(this.forecastData.temperature.values[0].value)
     }
 
     ngOnInit() {
@@ -101,6 +153,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     }
   
     private initializeApp() {
+      this.fetchWeather("37.9161","-122.3108");
       this.updateTime();
       this.fetchAndSetArrival();
       //Check if there are cookies set:
