@@ -66,6 +66,11 @@ interface Estimate {
     value: string;
   }
 
+  interface WeatherToDisplay{
+    dates: string[];
+    temperatures: string[];
+  }
+
   const DEFAULTSTATIONABREV = 'LAKE'
 
 @Component({
@@ -88,6 +93,8 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     //These values get passed to app.component, so we need to mark them as input and output
     stationName: string | undefined;
     currentTime: string | undefined;
+
+    highs: WeatherToDisplay | undefined;
 
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
@@ -125,6 +132,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         const locationAPI =  data.properties.forecastGridData;
 
         const responseForecast = await fetch(locationAPI);
+        console.log(locationAPI);
     
         if (!responseForecast.ok) {
             throw new Error('Network response was not ok' + response.statusText);
@@ -134,6 +142,41 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         this.forecastData = forecastData.properties;
         console.log(this.forecastData.temperature.values[0].value)
     }
+
+    //Helper Functions:
+    
+    //Zipcode to Lat, Long
+
+
+    //UTC to PST:
+
+    //Get the Date from the weatherAPI:
+    parseDate(date: string){
+      //Example from API: 2024-07-05
+      let year = parseInt(date.substring(0, 4), 10);
+      let month = parseInt(date.substring(5, 7), 10);
+      let day = parseInt(date.substring(8, 10), 10);
+
+      if(month < 10 ){
+        month = month % 10;
+      }
+
+      //If we want to return Date object instead:
+      //let month = parseInt(date.substring(5, 7), 10) - 1; //Months are 0-indexed :/
+      //const newDate = new Date(year, month, day);
+
+      return String(month)+"/"+String(day)
+    }
+
+    //Fuction to fill the weather forecast for the week 
+    getHighs(){
+      if (this.forecastData == undefined){
+        return;
+      }
+
+      const maxData = this.forecastData.temperature.values
+    }
+
 
     ngOnInit() {
       this.initializeApp();
