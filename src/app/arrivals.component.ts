@@ -94,7 +94,8 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     stationName: string | undefined;
     currentTime: string | undefined;
 
-    highs: WeatherToDisplay | undefined;
+    highs: string[][] | undefined;
+    lows: string[][] | undefined;
 
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
@@ -140,7 +141,9 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
         const forecastData: weatherForecastApiResponse = await responseForecast.json();
         this.forecastData = forecastData.properties;
-        console.log(this.forecastData.temperature.values[0].value)
+        console.log(this.forecastData.temperature.values[0].value);
+
+        this.getHighsandLows();
     }
 
     //Helper Functions:
@@ -150,6 +153,11 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
     //UTC to PST:
 
+    //C to F:
+    celsiusToFahrenheit(celsius: number): number {
+      return (celsius * 9/5) + 32;
+    }
+  
     //Get the Date from the weatherAPI:
     parseDate(date: string){
       //Example from API: 2024-07-05
@@ -165,16 +173,31 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
       //let month = parseInt(date.substring(5, 7), 10) - 1; //Months are 0-indexed :/
       //const newDate = new Date(year, month, day);
 
-      return String(month)+"/"+String(day)
+      return String(month) + "/" + String(day)
     }
 
     //Fuction to fill the weather forecast for the week 
-    getHighs(){
+    getHighsandLows(){
       if (this.forecastData == undefined){
         return;
       }
+      
+      const maxData = this.forecastData.maxTemperature.values
+      const minData = this.forecastData.minTemperature.values
+      this.highs = [];
+      this.lows = [];
 
-      const maxData = this.forecastData.temperature.values
+      //Run through the date for the next week and get the highs
+      for(let i=0; i<7; i++){
+        let d = this.parseDate(maxData[i].validTime);
+        let tHigh = this.celsiusToFahrenheit(parseFloat(maxData[i].value));
+        let tLow = this.celsiusToFahrenheit(parseFloat(minData[i].value));
+
+        let dayTemps: string[] = [d, tHigh.toString(), tLow.toString()];
+
+        console.log(dayTemps);
+        this.highs.push(dayTemps);
+      }
     }
 
 
