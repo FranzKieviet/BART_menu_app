@@ -39,36 +39,28 @@ interface Estimate {
   }
 
   interface weatherApiResponse {
-    properties: Properties;
+    hourly: Hourly;
+    daily: Daily;
+
   }
   
-  interface Properties {
-    forecastGridData: string;
+  interface Hourly {
+    time: Date[];
+    temperature_2m: number[];
+    apparent_teperature: string[];
+    precipitation_probability: string[];
+    precipitation: string[];
+    rain: string[];
+    showers: string[]
   }
 
-  interface weatherForecastApiResponse {
-    properties: PropertiesForecast;
-  }
-  
-  interface PropertiesForecast {
-    temperature: Weather;
-    maxTemperature: Weather;
-    minTemperature: Weather;
-  }
-
-  interface Weather{
-    umo: string;
-    values: WeatherValues[]; 
-  }
-
-  interface WeatherValues{
-    validTime: string;
-    value: string;
-  }
-
-  interface WeatherToDisplay{
-    dates: string[];
-    temperatures: string[];
+  interface Daily {
+    time: string[];
+    temperature_2m_max: string[];
+    temperature_2m_min: string[];
+    precipitation_sum: string[];
+    rain_sum: string[];
+    showers_sum: string[]
   }
 
   const DEFAULTSTATIONABREV = 'LAKE'
@@ -102,7 +94,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 
 
     //Weather Data:
-    forecastData: PropertiesForecast | undefined;
+    forecastData: weatherApiResponse | undefined;
     
     constructor(private cookieService: CookieService) { }
 
@@ -123,27 +115,15 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
     async fetchWeather(lat: string, long:string) {
         //The key below is a public key
-        const response = await fetch('https://api.weather.gov/points/' + lat + ',' + long);
+        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude='+ lat +'&longitude='+long+'&current=temperature_2m&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,showers_sum&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=America%2FLos_Angeles');
     
         if (!response.ok) {
             throw new Error('Network response was not ok' + response.statusText);
         }
     
         const data: weatherApiResponse = await response.json();
-        const locationAPI =  data.properties.forecastGridData;
-
-        const responseForecast = await fetch(locationAPI);
-        console.log(locationAPI);
-    
-        if (!responseForecast.ok) {
-            throw new Error('Network response was not ok' + response.statusText);
-        }
-
-        const forecastData: weatherForecastApiResponse = await responseForecast.json();
-        this.forecastData = forecastData.properties;
-        console.log(this.forecastData.temperature.values[0].value);
-
-        this.getHighsandLows();
+        console.log(data.hourly.time[0].getHours());
+        console.log(data.hourly.temperature_2m[0]*2);
     }
 
     //Helper Functions:
@@ -175,31 +155,6 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
 
       return String(month) + "/" + String(day)
     }
-
-    //Fuction to fill the weather forecast for the week 
-    getHighsandLows(){
-      if (this.forecastData == undefined){
-        return;
-      }
-      
-      const maxData = this.forecastData.maxTemperature.values
-      const minData = this.forecastData.minTemperature.values
-      this.highs = [];
-      this.lows = [];
-
-      //Run through the date for the next week and get the highs
-      for(let i=0; i<7; i++){
-        let d = this.parseDate(maxData[i].validTime);
-        let tHigh = this.celsiusToFahrenheit(parseFloat(maxData[i].value));
-        let tLow = this.celsiusToFahrenheit(parseFloat(minData[i].value));
-
-        let dayTemps: string[] = [d, tHigh.toString(), tLow.toString()];
-
-        console.log(dayTemps);
-        this.highs.push(dayTemps);
-      }
-    }
-
 
     ngOnInit() {
       this.initializeApp();
