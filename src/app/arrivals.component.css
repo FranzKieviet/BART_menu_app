@@ -2,23 +2,14 @@
     display: flex;
     justify-content: space-between;
     padding: 5px;
+    margin: 5px;
 }
 
-.top-left {
-    width: 50%;
-    max-width: 50%;
-    height: 5%;
-    max-height: 5%;
+.top {
     background-color: #e5e1e1;
     padding: 10px;
+    margin: 5px;
     border-radius: 10px;
-}
-
-.top-right {
-    width: 50%;
-    max-width: 50%;
-    height: 5%;
-    max-height: 5%;
 }
 
 .bartArt {
@@ -29,58 +20,131 @@
 
 .bartArt img {
     padding-left: 5px;
-    padding-right:5px;
-    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
     width: 100%;
     height: auto;
-    object-fit: cover; 
+    object-fit: cover;
     border-radius: 40px;
 }
 
-.arrival-times{
+.arrival-times {
     background: linear-gradient(to top, #ffffff, #1faad8);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
 }
 
-.arrival-times h1{
+.arrival-times h1 {
     font-size: 2em;
     font-weight: normal;
     align-content: center;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
     padding: 0px;
     margin: 0px;
-    border-bottom: 2px solid #545353; /* Add a bottom border */
+    border-bottom: 2px solid #545353;
     display: inline-block;
 }
 
 li.destination-item {
     display: flex;
-    font-size: .75vw;
+    font-size: 0.75vw;
     align-items: center;
     margin: 10px 0;
     text-align: left;
-  }
-  
-  .color-box {
+}
+
+.color-box {
     width: 2.5vw;
     height: 2.5vw;
     margin-right: 10px;
     border-radius: 10px;
-  }
+}
 
-  .destination-name {
+.destination-name {
     width: 70%;
     font-size: 3em;
-    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;  
-  }
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}
 
-  .departure-time {
+.departure-time {
     width: 30%;
     white-space: pre;
-    align-items: right;
-    font-size: 3em; 
+    text-align: right;
+    font-size: 3em;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
     margin-left: 10px;
+}
+
+.weather {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.weatherCity {
+    background: linear-gradient(to top, #ffffff, #1faad8);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    margin: 5px;
+    flex: 1;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.weather-container {
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.weather-item {
+    display: flex;
+    font-size: 1.3em;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.weather-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.day, .precipitation {
+    flex: 1;
+    text-align: left;
+}
+
+.weather-icon {
+    flex: 1;
+    text-align: center;
+}
+
+.temp {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.low, .high {
+    flex: 1;
+    text-align: center;
+}
+
+.bar {
+    flex: 2;
+    height: 2px;
+    background: #ccc;
+    border-radius: 5px;
+    position: relative;
+    margin: 0 5px;
 }

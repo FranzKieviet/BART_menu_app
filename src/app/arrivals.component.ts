@@ -41,26 +41,25 @@ interface Estimate {
   interface weatherApiResponse {
     hourly: Hourly;
     daily: Daily;
-
   }
   
   interface Hourly {
-    time: Date[];
+    time: string[];
     temperature_2m: number[];
-    apparent_teperature: string[];
-    precipitation_probability: string[];
-    precipitation: string[];
-    rain: string[];
-    showers: string[]
+    apparent_teperature: number[];
+    precipitation_probability: number[];
+    precipitation: number[];
+    rain: number[];
+    showers: number[];
   }
 
   interface Daily {
     time: string[];
-    temperature_2m_max: string[];
-    temperature_2m_min: string[];
-    precipitation_sum: string[];
-    rain_sum: string[];
-    showers_sum: string[]
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    precipitation_sum: number[];
+    rain_sum: number[];
+    showers_sum: number[];
   }
 
   const DEFAULTSTATIONABREV = 'LAKE'
@@ -86,8 +85,10 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     stationName: string | undefined;
     currentTime: string | undefined;
 
-    highs: string[][] | undefined;
-    lows: string[][] | undefined;
+    week: string[] | undefined;
+    highs: number[] = [0,0,0,0,0,0];
+    lows: number[] = [0,0,0,0,0,0];
+    icons: string[] = ['rainy', 'rainy', 'sunny', 'sunny', 'rainy'];
 
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
@@ -122,22 +123,51 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         }
     
         const data: weatherApiResponse = await response.json();
-        console.log(data.hourly.time[0].getHours());
-        console.log(data.hourly.temperature_2m[0]*2);
+        this.forecastData = data;
+        console.log(data.hourly.time[0]);
+        console.log(data.hourly.temperature_2m[0]);
     }
 
     //Helper Functions:
     
     //Zipcode to Lat, Long
-
-
-    //UTC to PST:
-
-    //C to F:
-    celsiusToFahrenheit(celsius: number): number {
-      return (celsius * 9/5) + 32;
+    //TODO
+    getFillWidth(low: number, high: number): string {
+      // Calculate the width as a percentage based on the temperature range
+      const tempRange = high - low;
+      const maxTempRange = 20; // Adjust this based on your expected temperature range
+      const percentage = (tempRange / maxTempRange) * 100;
+      return `${percentage}%`;
     }
-  
+
+    //Get the highs and lows:
+    updateHighsAndLows(){
+      
+      this.week = [];
+      this.highs = [];
+      this.lows = [];
+      const data = this.forecastData
+      
+      if (data == undefined){
+        console.log("No data for high and lows!");
+        return;
+      }
+
+      for (let i=0; i<7; i++){
+        this.week.push(this.getDayOfWeek(data.daily.time[i]));
+        this.highs.push(Math.round(data.daily.temperature_2m_max[i]));
+        this.lows.push(Math.round(data.daily.temperature_2m_min[i]));
+      }
+      console.log(this.week)
+      return;
+    }
+
+    getDayOfWeek(dateString: string): string {
+      const date = new Date(dateString);
+      const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+      const dayIndex = date.getDay();
+      return daysOfWeek[dayIndex];
+  }
     //Get the Date from the weatherAPI:
     parseDate(date: string){
       //Example from API: 2024-07-05
@@ -173,14 +203,17 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
       }
     }
   
-    private initializeApp() {
-      this.fetchWeather("37.9161","-122.3108");
+    private async initializeApp() {
+      await this.fetchWeather("37.9161","-122.3108");
       this.updateTime();
       this.fetchAndSetArrival();
       //Check if there are cookies set:
       if(this.cookieService.get('stationAbrev') == ''){
         this.cookieService.set('stationAbrev', DEFAULTSTATIONABREV);
       }
+
+      this.updateHighsAndLows();
+      console.log("Intial init complete");
     }
 
     private updateTime() {
