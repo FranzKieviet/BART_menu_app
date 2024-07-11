@@ -1,11 +1,11 @@
 <div class="bartArtContainer">
     <div class="top">
+        <h1>Next BART Arrivals:</h1>
         <div class="bartArt">
             <a href="https://www.pinterest.com/pin/san-francisco-bart--294141419406503673/">
             <img src="assets/images/bartArt5.png" alt="BART Art"> </a>
         </div>
         <div class="arrival-times">
-            <h1>BART ARRIVALS:</h1>
             <ul>
                 <li *ngFor="let dest of etd" class="destination-item">
                     <div class="color-box" [ngStyle]="{'background-color': dest.estimate[0].color}"></div>
@@ -17,6 +17,7 @@
     </div>
 
     <div class="top">
+        <h1>Your Local Weather:</h1>
         <div class="weather">
             <div class="weatherCity">
                 <div *ngIf="highsCity1 && lowsCity1 && week && highsCity1.length && lowsCity1.length && week.length" class="weather-container">
@@ -81,7 +82,7 @@
         </div>
         <div class="bartArt">
             <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hotelottava.it%2F%3Fs%3Dcreate-pixel-art-backgrounds-and-animations-by-arveyyudi-fiverr-tt-9pn2oWcy&psig=AOvVaw0q1bfJmXtv-_IXK8gy3Uw7&ust=1720767477590000&source=images&cd=vfe&opi=89978449&ved=0CBUQ3YkBahcKEwjQw6nDtJ6HAxUAAAAAHQAAAAAQBA">
-            <img src="assets/images/sf3.png" alt="SF Art"> </a>
+            <img src="assets/images/sf5.png" alt="SF Art"> </a>
         </div>
     </div>
 </div>

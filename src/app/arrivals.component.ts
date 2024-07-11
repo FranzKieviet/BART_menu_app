@@ -291,6 +291,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
             line.estimate.push(newEstimate);
           }
 
+
           for(let j in line.estimate){
             let estimate = line.estimate[j];
             
@@ -298,6 +299,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
             if (estimate.minutes == "Leaving"){
                 estimate.minutes = "0"
             }
+
             //This is here to make it so there is a space if the number is a single digit
             //Just makes it look pretty later on, no other functional purpose
             if (estimate.minutes.length == 1){
