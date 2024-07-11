@@ -91,9 +91,22 @@ li.destination-item {
     margin: 5px;
     flex: 1;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
+
+.weatherCity h1 {
+    font-size: 2em;
+    font-weight: normal;
+    text-align: center;
+    align-content: center;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px; 
+}
+
 
 .weather-container {
     border-radius: 10px;

@@ -72,6 +72,8 @@ interface Estimate {
 })
 
 export class ArrivalsComponent implements OnInit, OnDestroy{ 
+    CITYNAMES =['El Cerrito', 'San Francisco']
+    LATLONGS = [["37.9161","-122.3108"],["37.77083025", "-122.419498322"]]
     refreshRate: number = 5000;
     //TimeId is used in setInterval, which returns a unique identifier
     //which helps when we need to stop the timer
@@ -84,18 +86,23 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     stationName: string | undefined;
     currentTime: string | undefined;
 
+    //Weather Data:
+    forecastData: weatherApiResponse[] = [];
     week: string[] = [];
-    highs: number[] = [];
-    lows: number[] = [];
-    rainOdds: number[] = [];
-    icons: string[] = [];
+
+    highsCity1: number[] = [];
+    lowsCity1: number[] = [];
+    iconsCity1: string[] = [];
+
+    highsCity2: number[] = [];
+    lowsCity2: number[] = [];
+    iconsCity2: string[] = [];
 
     //We want to check for changes, and left app.component know
     @Output() stationNameChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() timeChange: EventEmitter<string> = new EventEmitter<string>(); 
 
-    //Weather Data:
-    forecastData: weatherApiResponse | undefined;
+
     
     constructor(private cookieService: CookieService) { }
 
@@ -114,24 +121,19 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
         return data;
     }
 
-    async fetchWeather(lat: string, long:string) {
+    async fetchWeather() {
+      for(let i=0; i<2; i++){
         //The key below is a public key
-        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude='+ lat +'&longitude='+long+'&current=temperature_2m&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=America%2FLos_Angeles');
+        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude='+ this.LATLONGS[i][0] +'&longitude=' + this.LATLONGS[i][1] + '&current=temperature_2m&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=America%2FLos_Angeles');
     
         if (!response.ok) {
             throw new Error('Network response was not ok' + response.statusText);
         }
     
         const data: weatherApiResponse = await response.json();
-        this.forecastData = data;
-        console.log(data.hourly.time[0]);
-        console.log(data.hourly.temperature_2m[0]);
+        this.forecastData[i] = data;
+      }
     }
-
-    //Helper Functions:
-    
-    //Zipcode to Lat, Long
-    //TODO
 
     //This fucntion helps figure out which emoji to use
     //WeatherAPI gives the weather code, which is defined here:
@@ -183,18 +185,24 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
   
     //Get the highs and lows and rain:
     updateWeeklyWeather(){
-      const data = this.forecastData
+      const dataCity1 = this.forecastData[0]
+      const dataCity2 = this.forecastData[1]
       
-      if (data == undefined){
+      if (dataCity1 == undefined || dataCity2 == undefined){
         console.log("No data for high and lows!");
         return;
       }
 
       for (let i=0; i<7; i++){
-        this.week.push(this.getDayOfWeek(data.daily.time[i]));
-        this.highs.push(Math.round(data.daily.temperature_2m_max[i]));
-        this.lows.push(Math.round(data.daily.temperature_2m_min[i]));
-        this.icons.push(this.updateIcons(data.daily.weather_code[i]));
+        this.week.push(this.getDayOfWeek(dataCity1.daily.time[i]));
+
+        this.highsCity1.push(Math.round(dataCity1.daily.temperature_2m_max[i]));
+        this.lowsCity1.push(Math.round(dataCity1.daily.temperature_2m_min[i]));
+        this.iconsCity1.push(this.updateIcons(dataCity1.daily.weather_code[i]));
+        
+        this.highsCity2.push(Math.round(dataCity2.daily.temperature_2m_max[i]));
+        this.lowsCity2.push(Math.round(dataCity2.daily.temperature_2m_min[i]));
+        this.iconsCity2.push(this.updateIcons(dataCity2.daily.weather_code[i]));
       }
       return;
     }
@@ -224,7 +232,7 @@ export class ArrivalsComponent implements OnInit, OnDestroy{
     }
   
     private async initializeApp() {
-      await this.fetchWeather("37.9161","-122.3108");
+      await this.fetchWeather();
       this.updateTime();
       this.fetchAndSetArrival();
       //Check if there are cookies set:

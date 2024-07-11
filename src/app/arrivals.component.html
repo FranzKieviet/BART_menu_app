@@ -23,11 +23,12 @@
         </div>
         <div class="weather">
             <div class="weatherCity">
-                <div *ngIf="highs && lows && week && highs.length && lows.length && week.length" class="weather-container">
+                <div *ngIf="highsCity1 && lowsCity1 && week && highsCity1.length && lowsCity1.length && week.length" class="weather-container">
+                    <h1>{{ CITYNAMES[0] }}:</h1>
                     <div class="weather-item" *ngFor="let day of week; let i = index">
                         <div class="day">{{ day }}</div>
                         <div class="weather-icon">
-                            <ng-container [ngSwitch]="icons[i]">
+                            <ng-container [ngSwitch]="iconsCity1[i]">
                                 <span *ngSwitchCase="'sunny'">☀️</span>
                                 <span *ngSwitchCase="'partlyCloudy'">🌤️</span>
                                 <span *ngSwitchCase="'mostlyCloudy'">⛅️</span>
@@ -44,19 +45,20 @@
                             </ng-container>
                         </div>
                         <div class="temp">
-                            <span class="low">{{ lows?.[i] }}°</span>
+                            <span class="low">{{ lowsCity1?.[i] }}°</span>
                             <div class="bar"></div>
-                            <span class="high">{{ highs?.[i] }}°</span>
+                            <span class="high">{{ highsCity1?.[i] }}°</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="weatherCity">
-                <div *ngIf="highs && lows && week && highs.length && lows.length && week.length" class="weather-container">
+                <div *ngIf="highsCity2 && lowsCity2 && week && highsCity2.length && lowsCity2.length && week.length" class="weather-container">
+                    <h1>{{ CITYNAMES[1] }}:</h1>
                     <div class="weather-item" *ngFor="let day of week; let i = index">
                         <div class="day">{{ day }}</div>
                         <div class="weather-icon">
-                            <ng-container [ngSwitch]="icons[i]">
+                            <ng-container [ngSwitch]="iconsCity2[i]">
                                 <span *ngSwitchCase="'sunny'">☀️</span>
                                 <span *ngSwitchCase="'partlyCloudy'">🌤️</span>
                                 <span *ngSwitchCase="'mostlyCloudy'">⛅️</span>
@@ -73,9 +75,9 @@
                             </ng-container>
                         </div>
                         <div class="temp">
-                            <span class="low">{{ lows?.[i] }}°</span>
+                            <span class="low">{{ lowsCity2?.[i] }}°</span>
                             <div class="bar"></div>
-                            <span class="high">{{ highs?.[i] }}°</span>
+                            <span class="high">{{ highsCity2?.[i] }}°</span>
                         </div>
                     </div>
                 </div>
