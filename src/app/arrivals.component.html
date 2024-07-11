@@ -28,10 +28,19 @@
                         <div class="day">{{ day }}</div>
                         <div class="weather-icon">
                             <ng-container [ngSwitch]="icons[i]">
-                                <span *ngSwitchCase="'rainy'">🌧️</span>
                                 <span *ngSwitchCase="'sunny'">☀️</span>
-                                <span *ngSwitchCase="'cloudy'">☁️</span>
-                                <span *ngSwitchDefault>🌩️</span>
+                                <span *ngSwitchCase="'partlyCloudy'">🌤️</span>
+                                <span *ngSwitchCase="'mostlyCloudy'">⛅️</span>
+                                <span *ngSwitchCase="'partlySunny'">🌥️</span>
+                                <span *ngSwitchCase="'lightRainShowers'">🌦️</span>
+                                <span *ngSwitchCase="'rainy'">🌧️</span>
+                                <span *ngSwitchCase="'thunderstorms'">⛈️</span>
+                                <span *ngSwitchCase="'lightning'">🌩️</span>
+                                <span *ngSwitchCase="'snowy'">🌨️</span>
+                                <span *ngSwitchCase="'tornado'">🌪️</span>
+                                <span *ngSwitchCase="'foggy'">🌫️</span>
+                                <span *ngSwitchCase="'snowflakes'">❄️</span>
+                                <span *ngSwitchDefault>🤷‍♂️</span>
                             </ng-container>
                         </div>
                         <div class="temp">
@@ -48,10 +57,19 @@
                         <div class="day">{{ day }}</div>
                         <div class="weather-icon">
                             <ng-container [ngSwitch]="icons[i]">
-                                <span *ngSwitchCase="'rainy'">🌧️</span>
                                 <span *ngSwitchCase="'sunny'">☀️</span>
-                                <span *ngSwitchCase="'cloudy'">☁️</span>
-                                <span *ngSwitchDefault>🌩️</span>
+                                <span *ngSwitchCase="'partlyCloudy'">🌤️</span>
+                                <span *ngSwitchCase="'mostlyCloudy'">⛅️</span>
+                                <span *ngSwitchCase="'partlySunny'">🌥️</span>
+                                <span *ngSwitchCase="'lightRainShowers'">🌦️</span>
+                                <span *ngSwitchCase="'rainy'">🌧️</span>
+                                <span *ngSwitchCase="'thunderstorms'">⛈️</span>
+                                <span *ngSwitchCase="'lightning'">🌩️</span>
+                                <span *ngSwitchCase="'snowy'">🌨️</span>
+                                <span *ngSwitchCase="'tornado'">🌪️</span>
+                                <span *ngSwitchCase="'foggy'">🌫️</span>
+                                <span *ngSwitchCase="'snowflakes'">❄️</span>
+                                <span *ngSwitchDefault>🤷‍♂️</span>
                             </ng-container>
                         </div>
                         <div class="temp">
