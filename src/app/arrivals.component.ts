@@ -73,7 +73,7 @@ interface Estimate {
 
 export class ArrivalsComponent implements OnInit, OnDestroy{ 
     CITYNAMES =['El Cerrito', 'San Francisco']
-    LATLONGS = [["37.9161","-122.3108"],["37.77083025", "-122.419498322"]]
+    LATLONGS = [["37.9161","-122.3108"],["37.774929", "-122.419418"]]
     refreshRate: number = 5000;
     //TimeId is used in setInterval, which returns a unique identifier
     //which helps when we need to stop the timer
