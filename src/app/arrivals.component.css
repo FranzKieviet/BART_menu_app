@@ -1,6 +1,6 @@
 .bartArtContainer {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 5px;
     margin: 5px;
 }
@@ -13,7 +13,7 @@
 }
 
 .top h1 {
-    font-size: 2em;
+    font-size: 3em;
     font-weight: bold;
     color: #081e26;
     align-content: center;
